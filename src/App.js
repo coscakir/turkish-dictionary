@@ -23,7 +23,7 @@ function SearchStack() {
 function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator initialRouteName="Search">
         <Tab.Screen name="History" component={HistoryView} />
         <Tab.Screen name="Search" component={SearchStack} />
         <Tab.Screen name="Favorite" component={FavoriteView} />
