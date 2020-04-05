@@ -39,7 +39,7 @@ function TabBar({state, descriptors, navigation}) {
               bg="red"
               borderRadius="full"
               onPress={onPress}>
-              <Search stroke="white" />
+              <Search />
             </Button>
           </Box>
         ) : (
@@ -50,8 +50,8 @@ function TabBar({state, descriptors, navigation}) {
             flex={1}
             flexDirection="column"
             onPress={onPress}>
-            {label === 'History' && <History stroke="gray" />}
-            {label === 'Favorite' && <Bookmark stroke="gray" />}
+            {label === 'History' && <History />}
+            {label === 'Favorite' && <Bookmark />}
             <Box
               borderRadius="full"
               size={3}
