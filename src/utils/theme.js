@@ -12,16 +12,16 @@ const colors = {
   proverbsLight: '#F9F5F1',
   textDark: '#0A151F',
   textMedium: '#48515B',
-  textLight: '#758291',
+  textLight: '#758291'
 }
 
 const radii = {
-  normal: 6,
-  full: 9999,
+  normal: 8,
+  full: 9999
 }
 
 export default {
   space,
   colors,
-  radii,
+  radii
 }
