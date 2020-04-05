@@ -3,6 +3,7 @@ import { View } from 'react-native'
 import Button from './button'
 import { Search, Bookmark, History } from './icons'
 import Box from './box'
+import theme from '../utils/theme'
 
 function TabBar({ state, descriptors, navigation }) {
   return (
@@ -39,7 +40,7 @@ function TabBar({ state, descriptors, navigation }) {
               borderRadius="full"
               onPress={onPress}
             >
-              <Search />
+              <Search color="white" />
             </Button>
           </Box>
         ) : (
@@ -51,8 +52,10 @@ function TabBar({ state, descriptors, navigation }) {
             flexDirection="column"
             onPress={onPress}
           >
-            {label === 'History' && <History />}
-            {label === 'Favorite' && <Bookmark />}
+            {label === 'History' && <History color={theme.colors.textLight} />}
+            {label === 'Favorite' && (
+              <Bookmark color={theme.colors.textLight} />
+            )}
             <Box
               borderRadius="full"
               size={3}
