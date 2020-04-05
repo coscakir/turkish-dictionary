@@ -1,44 +1,44 @@
-import React from 'react';
-import {View, Text} from 'react-native';
-import Button from './button';
-import {Search, Bookmark, History} from './icons';
-import Box from './box';
+import React from 'react'
+import { View } from 'react-native'
+import Button from './button'
+import { Search, Bookmark, History } from './icons'
+import Box from './box'
 
-function TabBar({state, descriptors, navigation}) {
+function TabBar({ state, descriptors, navigation }) {
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{ flexDirection: 'row' }}>
       {state.routes.map((route, index) => {
-        const {options} = descriptors[route.key];
+        const { options } = descriptors[route.key]
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
             ? options.title
-            : route.name;
+            : route.name
 
-        const isFocused = state.index === index;
+        const isFocused = state.index === index
 
         const onPress = () => {
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,
-            canPreventDefault: true,
-          });
+            canPreventDefault: true
+          })
 
           if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
+            navigation.navigate(route.name)
           }
-        };
+        }
 
         return label === 'Search' ? (
-          <Box p={15} borderRadius="full" mt={-15} bg="white">
+          <Box key={label} p={15} borderRadius="full" mt={-15} bg="white">
             <Button
               p={16}
-              key={label}
               height={56}
               bg="red"
               borderRadius="full"
-              onPress={onPress}>
+              onPress={onPress}
+            >
               <Search />
             </Button>
           </Box>
@@ -49,7 +49,8 @@ function TabBar({state, descriptors, navigation}) {
             height={56}
             flex={1}
             flexDirection="column"
-            onPress={onPress}>
+            onPress={onPress}
+          >
             {label === 'History' && <History />}
             {label === 'Favorite' && <Bookmark />}
             <Box
@@ -59,10 +60,10 @@ function TabBar({state, descriptors, navigation}) {
               mt={6}
             />
           </Button>
-        );
+        )
       })}
     </View>
-  );
+  )
 }
 
-export default TabBar;
+export default TabBar

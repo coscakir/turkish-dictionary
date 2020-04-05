@@ -1,15 +1,16 @@
-import * as React from 'react';
-import Svg, {Path} from 'react-native-svg';
+import * as React from 'react'
+import Svg, { Path } from 'react-native-svg'
 
 function SvgHistory(props) {
   return (
     <Svg
-      width="24"
-      height="24"
+      width={24}
+      height={24}
       viewBox="0 0 24 24"
       fill="none"
       className=""
-      {...props}>
+      {...props}
+    >
       <Path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -17,7 +18,7 @@ function SvgHistory(props) {
         fill="#758291"
       />
     </Svg>
-  );
+  )
 }
 
-export default SvgHistory;
+export default SvgHistory
