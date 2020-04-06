@@ -1,5 +1,5 @@
 export { default as Bookmark } from './Bookmark'
 export { default as Clear } from './Clear'
 export { default as History } from './History'
-export { default as LogoWhite } from './LogoWhite'
+export { default as Logo } from './Logo'
 export { default as Search } from './Search'

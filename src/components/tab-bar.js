@@ -7,7 +7,12 @@ import theme from '../utils/theme'
 
 function TabBar({ state, descriptors, navigation }) {
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <Box
+      flexDirection="row"
+      bg="white"
+      pb={20}
+      style={{ shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 20 }}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key]
         const label =
@@ -52,20 +57,26 @@ function TabBar({ state, descriptors, navigation }) {
             flexDirection="column"
             onPress={onPress}
           >
-            {label === 'History' && <History color={theme.colors.textLight} />}
+            {label === 'History' && (
+              <History
+                color={isFocused ? theme.colors.red : theme.colors.textLight}
+              />
+            )}
             {label === 'Favorite' && (
-              <Bookmark color={theme.colors.textLight} />
+              <Bookmark
+                color={isFocused ? theme.colors.red : theme.colors.textLight}
+              />
             )}
             <Box
               borderRadius="full"
-              size={3}
+              size={4}
               bg={isFocused ? 'red' : 'white'}
               mt={6}
             />
           </Button>
         )
       })}
-    </View>
+    </Box>
   )
 }
 
