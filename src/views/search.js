@@ -1,13 +1,33 @@
 import * as React from 'react'
-import { Text, ImageBackground, StatusBar, Animated } from 'react-native'
-import { Logo } from '../components/icons'
-import Search from '../components/search'
-import Box from '../components/box'
-import bg from '../assets/images/bg.jpg'
+import { FlatList, StatusBar, Animated } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view'
 import { useFocusEffect } from '@react-navigation/native'
+import Search from '../components/search'
+import Box from '../components/box'
+import Text from '../components/text'
+import Bg from '../components/bg'
+import { Logo } from '../components/icons'
+import { CardContainer, CardTitle, CardSummary } from '../components/card'
 
-function SearchView() {
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+    summary: 'summary test 1'
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+    summary: 'summary test 2'
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+    summary: 'summary test 3'
+  }
+]
+
+function SearchView({ navigation }) {
   const [heroHeight] = React.useState(new Animated.Value(285))
   const [isSearchFocus, setSearchFocus] = React.useState(false)
 
@@ -41,16 +61,11 @@ function SearchView() {
         height={heroHeight}
       >
         {!isSearchFocus && (
-          <Box
-            as={ImageBackground}
-            source={bg}
-            style={{ width: '100%', height: '100%' }}
-          >
-            {/** Logo */}
+          <Bg>
             <Box flex={1} alignItems="center" justifyContent="center">
               <Logo color="white" />
             </Box>
-          </Box>
+          </Bg>
         )}
         {/** Search Box */}
         <Box
@@ -65,14 +80,54 @@ function SearchView() {
       </Box>
 
       {/** Content */}
-      <Box flex={1} bg="white" pt={26}>
+      <Box flex={1} bg="softRed" pt={26}>
         {isSearchFocus ? (
           <Box p={30} flex={1}>
             <Text>History</Text>
           </Box>
         ) : (
-          <Box p={30} flex={1}>
-            <Text>Hello</Text>
+          <Box px={16} py={40} flex={1}>
+            <Box>
+              <Text pl={8} color="textLight">
+                Bir Atasözü
+              </Text>
+
+              <CardContainer
+                mt={10}
+                onPress={() => navigation.navigate('Detail')}
+              >
+                <CardTitle>on para</CardTitle>
+                <CardSummary>çok az (para).</CardSummary>
+              </CardContainer>
+            </Box>
+
+            <Box mt={40}>
+              <Text pl={8} color="textLight">
+                Bir Deyim
+              </Text>
+
+              <CardContainer
+                mt={10}
+                onPress={() => navigation.navigate('Detail')}
+              >
+                <CardTitle>siyem siyem ağlamak</CardTitle>
+                <CardSummary>
+                  hafif hafif, ince ince, durmadan gözyaşı dökmek.
+                </CardSummary>
+              </CardContainer>
+            </Box>
+            {/** 
+            <FlatList
+              data={DATA}
+              renderItem={({ item }) => (
+                <CardContainer mb={10}>
+                  <CardTitle>{item.title}</CardTitle>
+                  <CardSummary>{item.summary}</CardSummary>
+                </CardContainer>
+              )}
+              keyExtractor={(item) => item.id}
+            />
+             */}
           </Box>
         )}
       </Box>

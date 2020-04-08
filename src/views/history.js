@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { StatusBar, Text } from 'react-native'
-import Box from '../components/box'
 import SafeAreaView from 'react-native-safe-area-view'
 import { useFocusEffect } from '@react-navigation/native'
+
+import Box from '../components/box'
 
 function HistoryView() {
   useFocusEffect(
