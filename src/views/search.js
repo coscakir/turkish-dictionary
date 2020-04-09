@@ -8,6 +8,7 @@ import Text from '../components/text'
 import Bg from '../components/bg'
 import { Logo } from '../components/icons'
 import { CardContainer, CardTitle, CardSummary } from '../components/card'
+import { SimpleCardTitle, SimpleCardContainer } from '../components/simple-card'
 
 const DATA = [
   {
@@ -27,23 +28,38 @@ const DATA = [
   }
 ]
 
+const HERO_HEIGHT = 230
+
 function SearchView({ navigation }) {
-  const [heroHeight] = React.useState(new Animated.Value(285))
+  const [bgOpacity] = React.useState(new Animated.Value(1))
+  const [heroHeight] = React.useState(new Animated.Value(HERO_HEIGHT))
   const [isSearchFocus, setSearchFocus] = React.useState(false)
 
   React.useEffect(() => {
     if (isSearchFocus) {
+      // hero opacity
+      Animated.timing(bgOpacity, {
+        toValue: 0,
+        duration: 230
+      }).start()
+      // hero height
       Animated.timing(heroHeight, {
         toValue: 84,
         duration: 230
       }).start()
     } else {
+      // hero opacity
+      Animated.timing(bgOpacity, {
+        toValue: 1,
+        duration: 230
+      }).start()
+      // hero height
       Animated.timing(heroHeight, {
-        toValue: 285,
+        toValue: HERO_HEIGHT,
         duration: 230
       }).start()
     }
-  }, [heroHeight, isSearchFocus])
+  }, [bgOpacity, heroHeight, isSearchFocus])
 
   useFocusEffect(
     React.useCallback(() => {
@@ -60,13 +76,14 @@ function SearchView({ navigation }) {
         zIndex={1}
         height={heroHeight}
       >
-        {!isSearchFocus && (
-          <Bg>
+        <Box mt={-60} as={Animated.View} opacity={bgOpacity}>
+          <Bg pt={60} pb={26}>
             <Box flex={1} alignItems="center" justifyContent="center">
               <Logo color="white" />
             </Box>
           </Bg>
-        )}
+        </Box>
+
         {/** Search Box */}
         <Box
           position="absolute"
@@ -82,8 +99,24 @@ function SearchView({ navigation }) {
       {/** Content */}
       <Box flex={1} bg="softRed" pt={26}>
         {isSearchFocus ? (
-          <Box p={30} flex={1}>
-            <Text>History</Text>
+          <Box flex={1}>
+            <FlatList
+              style={{ padding: 16 }}
+              data={DATA}
+              keyExtractor={(item) => item.id}
+              ListHeaderComponent={
+                <Text color="textLight" mb={10}>
+                  Latest Search
+                </Text>
+              }
+              renderItem={({ item }) => (
+                <Box py={6}>
+                  <SimpleCardContainer>
+                    <SimpleCardTitle>{item.title}</SimpleCardTitle>
+                  </SimpleCardContainer>
+                </Box>
+              )}
+            />
           </Box>
         ) : (
           <Box px={16} py={40} flex={1}>
@@ -116,18 +149,6 @@ function SearchView({ navigation }) {
                 </CardSummary>
               </CardContainer>
             </Box>
-            {/** 
-            <FlatList
-              data={DATA}
-              renderItem={({ item }) => (
-                <CardContainer mb={10}>
-                  <CardTitle>{item.title}</CardTitle>
-                  <CardSummary>{item.summary}</CardSummary>
-                </CardContainer>
-              )}
-              keyExtractor={(item) => item.id}
-            />
-             */}
           </Box>
         )}
       </Box>
