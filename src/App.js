@@ -26,8 +26,7 @@ function SearchStack() {
         component={SearchView}
         options={() => {
           return {
-            headerMode: 'none',
-            header: () => {}
+            headerShown: false
           }
         }}
       />
@@ -36,7 +35,7 @@ function SearchStack() {
         component={DetailView}
         options={({ route, navigation }) => {
           return {
-            title: route.params?.title || 'Untitled',
+            title: route.params?.title,
             headerStyle: {
               backgroundColor: theme.colors.softRed,
               shadowColor: 'transparent'
