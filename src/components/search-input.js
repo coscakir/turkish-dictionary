@@ -1,11 +1,13 @@
 import React from 'react'
 import { Keyboard } from 'react-native'
+
 import Box from './box'
 import Input from './input'
 import Text from './text'
 import { Search, Clear } from './icons'
-import theme from '../utils/theme'
 import Button from './button'
+
+import theme from '../utils/theme'
 
 function SearchBox({ onChangeFocus }) {
   const [value, setValue] = React.useState('')

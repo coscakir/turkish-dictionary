@@ -1,8 +1,9 @@
 import React from 'react'
-import { View } from 'react-native'
+
 import Button from './button'
 import { Search, Bookmark, History } from './icons'
 import Box from './box'
+
 import theme from '../utils/theme'
 
 function TabBar({ state, descriptors, navigation }) {
