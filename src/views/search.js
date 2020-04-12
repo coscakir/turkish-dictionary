@@ -65,13 +65,21 @@ function SearchView({ navigation }) {
             <SuggestionCard
               title="Bir Kelime"
               data={homeData?.kelime[0]}
-              onPress={() => navigation.navigate('Detail')}
+              onPress={() =>
+                navigation.navigate('Detail', {
+                  keyword: homeData?.kelime[0].madde
+                })
+              }
             />
             <SuggestionCard
               mt={40}
               title="Bir Deyim-Atasözü"
               data={homeData?.atasoz[0]}
-              onPress={() => navigation.navigate('Detail')}
+              onPress={() =>
+                navigation.navigate('Detail', {
+                  keyword: homeData.atasoz[0].madde
+                })
+              }
             />
           </Box>
         )}

@@ -1,9 +1,9 @@
 import React from 'react'
-import { ActivityIndicator } from 'react-native'
 
 import Box from './box'
 import Text from './text'
 import { CardContainer, CardTitle, CardSummary } from './card'
+import TextLoader from './text-loader'
 
 function SuggestionCard({ title, data, onPress, ...props }) {
   return (
@@ -18,7 +18,10 @@ function SuggestionCard({ title, data, onPress, ...props }) {
             <CardSummary>{data.anlam}</CardSummary>
           </>
         ) : (
-          <ActivityIndicator />
+          <Box>
+            <TextLoader />
+            <TextLoader width={200} mt={10} />
+          </Box>
         )}
       </CardContainer>
     </Box>

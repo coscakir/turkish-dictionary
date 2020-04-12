@@ -6,75 +6,68 @@ import { useFocusEffect } from '@react-navigation/native'
 import Box from '../components/box'
 import Text from '../components/text'
 import { ActionButton, ActionButtonTitle } from '../components/action-button'
-import {
-  DetailItemContainer,
-  DetailItemTitle,
-  DetailItemDesc
-} from '../components/detail-item'
-
-import { VoiceSolid, Hand, Favorite } from '../components/icons'
+import { DetailItem } from '../components/detail-item'
+import TextLoader from '../components/text-loader'
+import { Voice, Hand, Favorite } from '../components/icons'
 import theme from '../utils/theme'
 
-function DetailView() {
+function DetailView({ route }) {
+  const keyword = route.params?.keyword
+
+  const [data, setData] = React.useState(null)
+
   useFocusEffect(
     React.useCallback(() => {
       StatusBar.setBarStyle('dark-content')
     }, [])
   )
 
+  const getDetailData = async () => {
+    const fetchData = await fetch(`https://sozluk.gov.tr/gts?ara=${keyword}`)
+    const detail = await fetchData.json()
+    setData(detail[0])
+  }
+
+  React.useEffect(() => {
+    getDetailData()
+  }, [])
+
   return (
     <Box as={SafeAreaView} bg="softRed" flex={1}>
       <Box as={ScrollView} p={16}>
         <Box>
           <Text fontSize={32} fontWeight="bold">
-            Kalem
+            {keyword}
           </Text>
           <Text color="textLight" fontStyle="italic" mt={8}>
-            Türkçe kalem
+            {data?.anlamlarListe[0].anlam}
           </Text>
         </Box>
 
         <Box mt={24} flexDirection="row">
-          <ActionButton>
-            <VoiceSolid width={24} height={24} color={theme.colors.red} />
+          <ActionButton disabled={!data}>
+            <Voice width={24} height={24} color={theme.colors.textLight} />
           </ActionButton>
-          <ActionButton ml={12}>
+          <ActionButton disabled={!data} ml={12}>
             <Favorite width={24} height={24} color={theme.colors.textLight} />
           </ActionButton>
-          <ActionButton ml="auto">
+          <ActionButton disabled={!data} ml="auto">
             <Hand width={24} height={24} color={theme.colors.textLight} />
             <ActionButtonTitle>Türk İşaret Dili</ActionButtonTitle>
           </ActionButton>
         </Box>
 
-        <Box mt={32}>
-          <DetailItemContainer>
-            <DetailItemTitle>
-              Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç:
-            </DetailItemTitle>
-            <DetailItemDesc>
-              "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı
-              Atay
-            </DetailItemDesc>
-          </DetailItemContainer>
-          <DetailItemContainer border>
-            <DetailItemTitle>
-              Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç:
-            </DetailItemTitle>
-            <DetailItemDesc>
-              "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı
-              Atay
-            </DetailItemDesc>
-          </DetailItemContainer>
-          <DetailItemContainer border>
-            <DetailItemTitle>
-              Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç:
-            </DetailItemTitle>
-            <DetailItemDesc>
-              "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı
-              Atay
-            </DetailItemDesc>
-          </DetailItemContainer>
+        <Box borderRadius="normal" overflow="hidden" mt={32}>
+          {data
+            ? data.anlamlarListe.map((item) => (
+                <DetailItem data={item} key={item.anlam_id} />
+              ))
+            : [1, 2, 3].map((index) => (
+                <DetailItem key={index} border={index !== 1}>
+                  <TextLoader />
+                  <TextLoader width={200} mt={10} />
+                </DetailItem>
+              ))}
         </Box>
       </Box>
     </Box>

@@ -3,16 +3,12 @@ import React from 'react'
 import Box from './box'
 import Text from './text'
 
-export function DetailItemContainer({ children, border, ...props }) {
+export function DetailItem({ data, children, border, ...props }) {
+  const type = (data?.ozelliklerListe &&
+    data.ozelliklerListe.map((_) => _.tam_adi.toUpperCase())) || ['İSİM']
+
   return (
-    <Box
-      position="relative"
-      bg="white"
-      px={28}
-      py={20}
-      borderRadius="normal"
-      {...props}
-    >
+    <Box position="relative" bg="white" px={28} py={20} {...props}>
       {border && (
         <Box
           position="absolute"
@@ -23,27 +19,35 @@ export function DetailItemContainer({ children, border, ...props }) {
           top={0}
         ></Box>
       )}
-      <Box flexDirection="row">
-        <Text color="textLight" ml={-14} mr={8}>
-          1
-        </Text>
-        <Text color="red" fontStyle="italic">
-          İSİM
-        </Text>
-      </Box>
-      <Box mt={8}>{children}</Box>
+      {data ? (
+        <Box>
+          <Box flexDirection="row">
+            <Text color="textLight" ml={-14} mr={8}>
+              {data.anlam_sira}
+            </Text>
+
+            <Text color="red" fontStyle="italic">
+              {type.join(', ')}
+            </Text>
+          </Box>
+          <Box mt={8}>
+            <Text fontWeight="600">{data.anlam}</Text>
+            {data.orneklerListe &&
+              data.orneklerListe.map((item) => (
+                <Box key={item.ornek_id}>
+                  <Text ml={12} mt={12} color="textLight" fontWeight="500">
+                    {`"${item.ornek}"`}
+                    <Text fontWeight="700" color="textLight">
+                      {item.yazar_id !== '0' && ` - ${item.yazar[0].tam_adi}`}
+                    </Text>
+                  </Text>
+                </Box>
+              ))}
+          </Box>
+        </Box>
+      ) : (
+        children
+      )}
     </Box>
-  )
-}
-
-export function DetailItemTitle({ children }) {
-  return <Text fontWeight="600">{children}</Text>
-}
-
-export function DetailItemDesc({ children }) {
-  return (
-    <Text ml={12} mt={12} color="textLight" fontWeight="500">
-      {children}
-    </Text>
   )
 }
